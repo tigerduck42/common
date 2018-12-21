@@ -266,7 +266,8 @@ abstract class AbstractConfig implements \JsonSerializable, IConfig
     }
 
     /**
-     * Generate the configuration needed for connecting.
+     * Generate the type of configuration needed by the PHP module in order to
+     * establish a connection to SAP.
      * @return mixed
      */
     abstract public function generateConfig();
