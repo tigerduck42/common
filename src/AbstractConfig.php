@@ -17,7 +17,7 @@ use phpsap\interfaces\IConfig;
  * Class phpsap\classes\AbstractConfig
  *
  * Abstract class to configure basic connection parameters for SAP remote function
- * calls.
+ * calls, that are common to both connection types (A, and B).
  *
  * @package phpsap\classes
  * @author  Gregor J.
