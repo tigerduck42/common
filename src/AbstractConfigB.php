@@ -35,6 +35,15 @@ abstract class AbstractConfigB extends AbstractConfig implements IConfigB
     }
 
     /**
+     * Set the r3name.
+     * @param string $value
+     */
+    protected function setR3name($value)
+    {
+        $this->config['r3name'] = (string)$value;
+    }
+
+    /**
      * Get the host name of the message server.
      * @return string host name of the message server
      */
@@ -44,11 +53,29 @@ abstract class AbstractConfigB extends AbstractConfig implements IConfigB
     }
 
     /**
+     * Set the mshost.
+     * @param string $value
+     */
+    protected function setMshost($value)
+    {
+        $this->config['mshost'] = (string)$value;
+    }
+
+    /**
      * Get the group name of the application servers, optional; default: PUBLIC.
      * @return string group name of the application servers
      */
     public function getGroup()
     {
         return $this->config['group'];
+    }
+
+    /**
+     * Set the group.
+     * @param string $value
+     */
+    protected function setGroup($value)
+    {
+        $this->config['group'] = (string)$value;
     }
 }
