@@ -85,6 +85,11 @@ abstract class AbstractConfig implements \JsonSerializable, IConfig
             );
         }
         $configArr = json_decode($config, true);
+        if ($configArr === null) {
+            throw new \InvalidArgumentException(
+                'Expected config to be a JSON encoded string!'
+            );
+        }
         $this->loadArray($configArr);
     }
 
