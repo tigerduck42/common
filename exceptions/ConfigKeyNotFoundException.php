@@ -22,7 +22,6 @@ use Psr\Container\NotFoundExceptionInterface;
  * @author  Gregor J.
  * @license MIT
  */
-class ConfigKeyNotFoundException extends \RuntimeException implements NotFoundExceptionInterface
+class ConfigKeyNotFoundException extends SapException implements NotFoundExceptionInterface
 {
-
 }

@@ -11,6 +11,8 @@
 
 namespace phpsap\exceptions;
 
+use phpsap\interfaces\IFunctionCallException;
+
 /**
  * Class phpsap\exceptions\FunctionCallException
  *
@@ -20,7 +22,6 @@ namespace phpsap\exceptions;
  * @author  Gregor J.
  * @license MIT
  */
-class FunctionCallException extends \RuntimeException
+class FunctionCallException extends SapException implements IFunctionCallException
 {
-
 }

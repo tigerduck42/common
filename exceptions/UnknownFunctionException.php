@@ -11,6 +11,8 @@
 
 namespace phpsap\exceptions;
 
+use phpsap\interfaces\IUnknownFunctionException;
+
 /**
  * Class phpsap\exceptions\UnknownFunctionException
  *
@@ -20,7 +22,6 @@ namespace phpsap\exceptions;
  * @author  Gregor J.
  * @license MIT
  */
-class UnknownFunctionException extends \RuntimeException
+class UnknownFunctionException extends SapException implements IUnknownFunctionException
 {
-
 }

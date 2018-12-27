@@ -11,6 +11,8 @@
 
 namespace phpsap\exceptions;
 
+use phpsap\interfaces\IConnectionFailedException;
+
 /**
  * Class phpsap\exceptions\ConnectionFailedException
  *
@@ -20,7 +22,6 @@ namespace phpsap\exceptions;
  * @author  Gregor J.
  * @license MIT
  */
-class ConnectionFailedException extends \RuntimeException
+class ConnectionFailedException extends SapException implements IConnectionFailedException
 {
-
 }
