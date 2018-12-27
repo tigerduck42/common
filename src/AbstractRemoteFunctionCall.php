@@ -4,7 +4,7 @@
  *
  * PHP/SAP proxy class for SAP remote function calls.
  *
- * @package saprfc-koucky
+ * @package common
  * @author  Gregor J.
  * @license MIT
  */

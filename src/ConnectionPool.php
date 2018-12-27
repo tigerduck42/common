@@ -4,7 +4,7 @@
  *
  * PHP/SAP connection pool.
  *
- * @package saprfc-koucky
+ * @package common
  * @author  Gregor J.
  * @license MIT
  */

@@ -4,7 +4,7 @@
  *
  * Type A configuration.
  *
- * @package saprfc-koucky
+ * @package common
  * @author  Gregor J.
  * @license MIT
  */
