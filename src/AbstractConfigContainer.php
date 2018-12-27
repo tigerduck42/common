@@ -11,7 +11,7 @@
 
 namespace phpsap\classes;
 
-use phpsap\exceptions\NotFoundException;
+use phpsap\exceptions\ConfigKeyNotFoundException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -135,7 +135,7 @@ abstract class AbstractConfigContainer implements ContainerInterface, \JsonSeria
             );
         }
         if (!$this->has($key)) {
-            throw new NotFoundException(sprintf(
+            throw new ConfigKeyNotFoundException(sprintf(
                 'No entry was found for configuration key \'%s\'.',
                 $key
             ));

@@ -1,6 +1,6 @@
 <?php
 /**
- * File exceptions/NotFoundException.php
+ * File exceptions/ConfigKeyNotFoundExceptionException.php
  *
  * No entry was found in the container.
  *
@@ -14,7 +14,7 @@ namespace phpsap\exceptions;
 use Psr\Container\NotFoundExceptionInterface;
 
 /**
- * Class phpsap\exceptions\NotFoundException
+ * Class phpsap\exceptions\ConfigKeyNotFoundException
  *
  * No entry was found in the container.
  *
@@ -22,7 +22,7 @@ use Psr\Container\NotFoundExceptionInterface;
  * @author  Gregor J.
  * @license MIT
  */
-class NotFoundException extends \RuntimeException implements NotFoundExceptionInterface
+class ConfigKeyNotFoundException extends \RuntimeException implements NotFoundExceptionInterface
 {
 
 }

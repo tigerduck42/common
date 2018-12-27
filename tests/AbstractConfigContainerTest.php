@@ -12,7 +12,7 @@
 namespace tests\phpsap\classes;
 
 use phpsap\classes\AbstractConfigContainer;
-use phpsap\exceptions\NotFoundException;
+use phpsap\exceptions\ConfigKeyNotFoundException;
 use Psr\Container\ContainerInterface;
 use tests\phpsap\classes\helper\ConfigContainer;
 
@@ -139,7 +139,7 @@ class AbstractConfigContainerTest extends \PHPUnit_Framework_TestCase
         static::assertTrue($config->has('qvypepzo'));
         static::assertSame('K77wHitp', $config->get('qvypepzo'));
         static::assertFalse($config->has('sjkynhiv'));
-        $this->setExpectedException(NotFoundException::class, 'No entry was found for configuration key \'sjkynhiv\'.');
+        $this->setExpectedException(ConfigKeyNotFoundException::class, 'No entry was found for configuration key \'sjkynhiv\'.');
         $config->get('sjkynhiv');
     }
 
