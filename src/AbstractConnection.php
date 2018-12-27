@@ -11,6 +11,7 @@
 
 namespace phpsap\classes;
 
+use phpsap\exceptions\ConnectionFailedException;
 use phpsap\interfaces\IConfig;
 use phpsap\interfaces\IConnection;
 
@@ -25,16 +26,6 @@ use phpsap\interfaces\IConnection;
  */
 abstract class AbstractConnection implements IConnection
 {
-    /**
-     * @var int number of retries, when establishing a connection.
-     */
-    const RETRIES = 1;
-
-    /**
-     * @var int number of seconds to wait before connection retry.
-     */
-    const RETRY_WAIT = 1;
-
     /**
      * @var mixed SAP remote connection.
      */
@@ -83,27 +74,28 @@ abstract class AbstractConnection implements IConnection
     }
 
     /**
-     * Returns the actual connection ressource.
+     * Returns the actual connection resource.
      * @return mixed SAPRFC connection instance
      * @throws \phpsap\exceptions\ConnectionFailedException
      */
     protected function getConnection()
     {
-        $trials = 0;
-        do {
-            if ($this->ping()) {
-                return $this->connection;
-            }
-            $trials++;
-            sleep(static::RETRY_WAIT);
-        } while ($trials <= static::RETRIES);
-        //give up
-        throw new \phpsap\exceptions\ConnectionFailedException(sprintf(
-            'Connection %s failed after %u retries.',
-            $this->getId(),
-            static::RETRIES
-        ));
+        if (!$this->isConnected()) {
+            $this->connect();
+        }
+        if ($this->connection === null) {
+            throw new ConnectionFailedException(sprintf(
+                'Connection %s failed.',
+                $this->getId()
+            ));
+        }
+        return $this->connection;
     }
+
+    /**
+     * @throws \phpsap\exceptions\ConnectionFailedException
+     */
+    abstract public function connect();
 
     /**
      * Send a ping request via an established connection to verify that the
