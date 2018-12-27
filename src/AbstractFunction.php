@@ -62,7 +62,7 @@ abstract class AbstractFunction implements IFunction
 
     /**
      * Remove all parameters that have been set and start over.
-     * @return \phpsap\interfaces\IFunction
+     * @return \phpsap\classes\AbstractFunction $this
      */
     public function reset()
     {
@@ -74,7 +74,7 @@ abstract class AbstractFunction implements IFunction
      * Set function call parameter.
      * @param string                           $name
      * @param array|string|float|int|bool|null $value
-     * @return \phpsap\interfaces\IFunction $this
+     * @return \phpsap\classes\AbstractFunction $this
      * @throws \InvalidArgumentException
      */
     public function setParam($name, $value)
@@ -108,6 +108,8 @@ abstract class AbstractFunction implements IFunction
      * @param null|array $params Optional parameter array.
      * @return array
      * @throws \InvalidArgumentException
+     * @throws \phpsap\exceptions\ConnectionFailedException
+     * @throws \phpsap\exceptions\FunctionCallException
      */
     public function invoke($params = null)
     {
@@ -135,6 +137,8 @@ abstract class AbstractFunction implements IFunction
     /**
      * Execute the prepared function call.
      * @return array
+     * @throws \phpsap\exceptions\ConnectionFailedException
+     * @throws \phpsap\exceptions\FunctionCallException
      */
     abstract protected function execute();
 }

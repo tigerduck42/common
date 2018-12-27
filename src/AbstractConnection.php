@@ -121,8 +121,9 @@ abstract class AbstractConnection implements IConnection
     /**
      * Prepare a remote function call and return a function instance.
      * @param string $name
-     * @return \phpsap\interfaces\PhpSapIFunction
+     * @return \phpsap\classes\AbstractFunction
      * @throws \phpsap\exceptions\ConnectionFailedException
+     * @throws \phpsap\exceptions\UnknownFunctionException
      */
     abstract public function prepareFunction($name);
 }

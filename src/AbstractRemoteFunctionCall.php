@@ -31,7 +31,7 @@ abstract class AbstractRemoteFunctionCall implements IFunction
     protected $connectionId;
 
     /**
-     * @var \phpsap\saprfc\SapRfcFunction
+     * @var \phpsap\classes\AbstractFunction
      */
     protected $function;
 
@@ -59,7 +59,7 @@ abstract class AbstractRemoteFunctionCall implements IFunction
 
     /**
      * Remove the function instance.
-     * @return \phpsap\interfaces\IFunction
+     * @return \phpsap\classes\AbstractRemoteFunctionCall $this
      */
     public function reset()
     {
@@ -71,7 +71,9 @@ abstract class AbstractRemoteFunctionCall implements IFunction
      * Set function call parameter.
      * @param string                           $name
      * @param array|bool|float|int|string|null $value
-     * @return \phpsap\interfaces\IFunction
+     * @return \phpsap\classes\AbstractRemoteFunctionCall $this
+     * @throws \phpsap\interfaces\IConnectionFailedException
+     * @throws \phpsap\interfaces\IUnknownFunctionException
      */
     public function setParam($name, $value)
     {
@@ -84,6 +86,9 @@ abstract class AbstractRemoteFunctionCall implements IFunction
      * Invoke SAP remote function call.
      * @param null|array $params Optional parameter array.
      * @return array result.
+     * @throws \phpsap\interfaces\IConnectionFailedException
+     * @throws \phpsap\interfaces\IUnknownFunctionException
+     * @throws \phpsap\exceptions\FunctionCallException
      */
     public function invoke($params = null)
     {
@@ -101,7 +106,9 @@ abstract class AbstractRemoteFunctionCall implements IFunction
 
     /**
      * Get the function instance.
-     * @return \phpsap\interfaces\IFunction
+     * @return \phpsap\classes\AbstractFunction
+     * @throws \phpsap\interfaces\IConnectionFailedException
+     * @throws \phpsap\interfaces\IUnknownFunctionException
      */
     protected function &getFunction()
     {
@@ -124,5 +131,5 @@ abstract class AbstractRemoteFunctionCall implements IFunction
      * @param \phpsap\interfaces\IConfig $config
      * @return \phpsap\interfaces\IConnection
      */
-    abstract protected function createConnectionInstance($config);
+    abstract protected function createConnectionInstance(IConfig $config);
 }
