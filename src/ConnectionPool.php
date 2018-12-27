@@ -11,6 +11,7 @@
 
 namespace phpsap\classes;
 
+use phpsap\exceptions\ConnectionNotFoundException;
 use phpsap\interfaces\IConnection;
 
 /**
@@ -47,12 +48,12 @@ class ConnectionPool
      * Get the connection with the given connection ID.
      * @param int|string $connectionId
      * @return \phpsap\interfaces\IConnection
-     * @throws \RuntimeException in case of a non-existing ID
+     * @throws \phpsap\exceptions\ConnectionNotFoundException in case of a non-existing ID
      */
     public static function get($connectionId)
     {
         if (!static::has($connectionId)) {
-            throw new \RuntimeException('Invalid connection ID');
+            throw new ConnectionNotFoundException('Invalid connection ID');
         }
         return static::$connections[$connectionId];
     }
