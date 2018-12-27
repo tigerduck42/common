@@ -31,7 +31,7 @@ abstract class AbstractConfigB extends AbstractConfig implements IConfigB
      */
     public function getR3name()
     {
-        return $this->config['r3name'];
+        return $this->get('r3name');
     }
 
     /**
@@ -40,7 +40,7 @@ abstract class AbstractConfigB extends AbstractConfig implements IConfigB
      */
     protected function setR3name($value)
     {
-        $this->config['r3name'] = (string)$value;
+        $this->set('r3name', (string)$value);
     }
 
     /**
@@ -49,7 +49,7 @@ abstract class AbstractConfigB extends AbstractConfig implements IConfigB
      */
     public function getMshost()
     {
-        return $this->config['mshost'];
+        return $this->get('mshost');
     }
 
     /**
@@ -58,7 +58,7 @@ abstract class AbstractConfigB extends AbstractConfig implements IConfigB
      */
     protected function setMshost($value)
     {
-        $this->config['mshost'] = (string)$value;
+        $this->set('mshost', (string)$value);
     }
 
     /**
@@ -67,7 +67,7 @@ abstract class AbstractConfigB extends AbstractConfig implements IConfigB
      */
     public function getGroup()
     {
-        return $this->config['group'];
+        return $this->get('group');
     }
 
     /**
@@ -76,6 +76,6 @@ abstract class AbstractConfigB extends AbstractConfig implements IConfigB
      */
     protected function setGroup($value)
     {
-        $this->config['group'] = (string)$value;
+        $this->set('group', (string)$value);
     }
 }

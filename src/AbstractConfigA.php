@@ -31,7 +31,7 @@ abstract class AbstractConfigA extends AbstractConfig implements IConfigA
      */
     public function getAshost()
     {
-        return $this->config['ashost'];
+        return $this->get('ashost');
     }
 
     /**
@@ -40,7 +40,7 @@ abstract class AbstractConfigA extends AbstractConfig implements IConfigA
      */
     protected function setAshost($value)
     {
-        $this->config['ashost'] = (string)$value;
+        $this->set('ashost', (string)$value);
     }
 
     /**
@@ -49,7 +49,7 @@ abstract class AbstractConfigA extends AbstractConfig implements IConfigA
      */
     public function getSysnr()
     {
-        return $this->config['sysnr'];
+        return $this->get('sysnr');
     }
 
     /**
@@ -58,7 +58,7 @@ abstract class AbstractConfigA extends AbstractConfig implements IConfigA
      */
     protected function setSysnr($value)
     {
-        $this->config['sysnr'] = (string)$value;
+        $this->set('sysnr', (string)$value);
     }
 
     /**
@@ -67,7 +67,7 @@ abstract class AbstractConfigA extends AbstractConfig implements IConfigA
      */
     public function getGwhost()
     {
-        return $this->config['gwhost'];
+        return $this->get('gwhost');
     }
 
     /**
@@ -76,7 +76,7 @@ abstract class AbstractConfigA extends AbstractConfig implements IConfigA
      */
     protected function setGwhost($value)
     {
-        $this->config['gwhost'] = (string)$value;
+        $this->set('gwhost', (string)$value);
     }
 
     /**
@@ -85,7 +85,7 @@ abstract class AbstractConfigA extends AbstractConfig implements IConfigA
      */
     public function getGwserv()
     {
-        return $this->config['gwserv'];
+        return $this->get('gwserv');
     }
 
     /**
@@ -94,6 +94,6 @@ abstract class AbstractConfigA extends AbstractConfig implements IConfigA
      */
     protected function setGwserv($value)
     {
-        $this->config['gwserv'] = (string)$value;
+        $this->set('gwserv', (string)$value);
     }
 }

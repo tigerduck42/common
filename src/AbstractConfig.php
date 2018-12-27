@@ -23,95 +23,15 @@ use phpsap\interfaces\IConfig;
  * @author  Gregor J.
  * @license MIT
  */
-abstract class AbstractConfig implements \JsonSerializable, IConfig
+abstract class AbstractConfig extends AbstractConfigContainer implements IConfig
 {
-    /**
-     * @var array configuration data
-     */
-    protected $config;
-
-    /**
-     * Constructor optionally loads the configuration either from a JSON encoded
-     * string or from an array.
-     * @param array|string $config the configuration
-     * @throws \InvalidArgumentException
-     */
-    public function __construct($config = null)
-    {
-        $this->config = [];
-        if (is_array($config)) {
-            $this->loadArray($config);
-        } elseif (is_string($config)) {
-            $this->loadJsonString($config);
-        } elseif ($config !== null) {
-            throw new \InvalidArgumentException(
-                'Expected configuration to either be an array'
-                . ', or a JSON encoded string!'
-            );
-        }
-    }
-
-    /**
-     * Load configuration array.
-     * @param array $config
-     * @throws \InvalidArgumentException
-     */
-    protected function loadArray($config)
-    {
-        if (!is_array($config)) {
-            throw new \InvalidArgumentException(
-                'Expected config to be an array!'
-            );
-        }
-        foreach ($config as $key => $value) {
-            $key = strtolower($key);
-            $method = sprintf('set%s', ucfirst($key));
-            if (method_exists($this, $method)) {
-                $this->{$method}($value);
-            }
-        }
-    }
-
-    /**
-     * Load configuration from a JSON string.
-     * @param string $config
-     * @throws \InvalidArgumentException
-     */
-    protected function loadJsonString($config)
-    {
-        if (!is_string($config)) {
-            throw new \InvalidArgumentException(
-                'Expected config to be a JSON encoded string!'
-            );
-        }
-        $configArr = json_decode($config, true);
-        if ($configArr === null) {
-            throw new \InvalidArgumentException(
-                'Expected config to be a JSON encoded string!'
-            );
-        }
-        $this->loadArray($configArr);
-    }
-
-    /**
-     * Specify data which should be serialized to JSON
-     * @link  https://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
-     * @since 5.4.0
-     */
-    public function jsonSerialize()
-    {
-        return $this->config;
-    }
-
     /**
      * Get the username.
      * @return string the username
      */
     public function getUser()
     {
-        return $this->config['user'];
+        return $this->get('user');
     }
 
     /**
@@ -120,7 +40,7 @@ abstract class AbstractConfig implements \JsonSerializable, IConfig
      */
     protected function setUser($value)
     {
-        $this->config['user'] = (string)$value;
+        $this->set('user', (string)$value);
     }
 
     /**
@@ -129,7 +49,7 @@ abstract class AbstractConfig implements \JsonSerializable, IConfig
      */
     public function getPasswd()
     {
-        return $this->config['passwd'];
+        return $this->get('passwd');
     }
 
     /**
@@ -138,7 +58,7 @@ abstract class AbstractConfig implements \JsonSerializable, IConfig
      */
     protected function setPasswd($value)
     {
-        $this->config['passwd'] = (string)$value;
+        $this->set('passwd', (string)$value);
     }
 
     /**
@@ -147,7 +67,7 @@ abstract class AbstractConfig implements \JsonSerializable, IConfig
      */
     public function getClient()
     {
-        return $this->config['client'];
+        return $this->get('client');
     }
 
     /**
@@ -156,7 +76,7 @@ abstract class AbstractConfig implements \JsonSerializable, IConfig
      */
     protected function setClient($value)
     {
-        $this->config['client'] = (string)$value;
+        $this->set('client', (string)$value);
     }
 
     /**
@@ -165,7 +85,7 @@ abstract class AbstractConfig implements \JsonSerializable, IConfig
      */
     public function getLang()
     {
-        return $this->config['lang'];
+        return $this->get('lang');
     }
 
     /**
@@ -180,7 +100,7 @@ abstract class AbstractConfig implements \JsonSerializable, IConfig
                 'Expected two letter country code as language.'
             );
         }
-        $this->config['lang'] = (string)$match[0];
+        $this->set('lang', (string)$match[0]);
     }
 
     /**
@@ -189,7 +109,7 @@ abstract class AbstractConfig implements \JsonSerializable, IConfig
      */
     public function getSaprouter()
     {
-        return $this->config['saprouter'];
+        return $this->get('saprouter');
     }
 
     /**
@@ -200,7 +120,7 @@ abstract class AbstractConfig implements \JsonSerializable, IConfig
      */
     public function setSaprouter($value)
     {
-        $this->config['saprouter'] = (string)$value;
+        $this->set('saprouter', (string)$value);
     }
 
     /**
@@ -209,7 +129,7 @@ abstract class AbstractConfig implements \JsonSerializable, IConfig
      */
     public function getTrace()
     {
-        return $this->config['trace'];
+        return $this->get('trace');
     }
 
     /**
@@ -224,7 +144,7 @@ abstract class AbstractConfig implements \JsonSerializable, IConfig
                 'The trace level can only be 0-3.'
             );
         }
-        $this->config['trace'] = (int)$match[0];
+        $this->set('trace', (int)$match[0]);
     }
 
     /**
@@ -237,7 +157,7 @@ abstract class AbstractConfig implements \JsonSerializable, IConfig
      */
     public function getCodepage()
     {
-        return $this->config['codepage'];
+        return $this->get('codepage');
     }
 
     /**
@@ -250,7 +170,7 @@ abstract class AbstractConfig implements \JsonSerializable, IConfig
      */
     public function setCodepage($value)
     {
-        $this->config['codepage'] = (int)$value;
+        $this->set('codepage', (int)$value);
     }
 
     /**
@@ -259,7 +179,7 @@ abstract class AbstractConfig implements \JsonSerializable, IConfig
      */
     public function getDest()
     {
-        return $this->config['dest'];
+        return $this->get('dest');
     }
 
     /**
@@ -268,13 +188,6 @@ abstract class AbstractConfig implements \JsonSerializable, IConfig
      */
     public function setDest($value)
     {
-        $this->config['dest'] = (string)$value;
+        $this->set('dest', (string)$value);
     }
-
-    /**
-     * Generate the type of configuration needed by the PHP module in order to
-     * establish a connection to SAP.
-     * @return mixed
-     */
-    abstract public function generateConfig();
 }
