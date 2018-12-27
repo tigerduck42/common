@@ -95,7 +95,9 @@ abstract class AbstractConfig extends AbstractConfigContainer implements IConfig
      */
     protected function setLang($value)
     {
-        if (!preg_match('~^[A-Z]{2}$~', $value, $match)) {
+        if (!is_string($value)
+            || !preg_match('~^[A-Z]{2}$~', $value, $match)
+        ) {
             throw new \InvalidArgumentException(
                 'Expected two letter country code as language.'
             );
