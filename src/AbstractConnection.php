@@ -96,7 +96,7 @@ abstract class AbstractConnection implements IConnection
             }
             $trials++;
             sleep(static::RETRY_WAIT);
-        } while ($trials < static::RETRIES);
+        } while ($trials <= static::RETRIES);
         //give up
         throw new \phpsap\exceptions\ConnectionFailedException(sprintf(
             'Connection %s failed after %u retries.',
