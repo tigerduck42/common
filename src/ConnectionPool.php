@@ -11,6 +11,8 @@
 
 namespace phpsap\classes;
 
+use phpsap\interfaces\IConnection;
+
 /**
  * Class phpsap\classes\ConnectionPool
  *
@@ -60,7 +62,7 @@ class ConnectionPool
      * @param int|string $connectionId
      * @param \phpsap\interfaces\IConnection $connection
      */
-    public static function add($connectionId, $connection)
+    public static function add($connectionId, IConnection $connection)
     {
         if (!static::has($connectionId)) {
             static::$connections[$connectionId] = $connection;
