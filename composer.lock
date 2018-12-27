@@ -4,8 +4,47 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "97d5f21add04bb06daf9e4c389e0e677",
+    "content-hash": "9380c4b5654d08a2baa14638f38a3311",
     "packages": [
+        {
+            "name": "kba-team/typecast",
+            "version": "v1.0.1-stable",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/the-kbA-team/typecast.git",
+                "reference": "89939ad0dbf92f6ef09c48764347f473d51e8786"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/the-kbA-team/typecast/zipball/89939ad0dbf92f6ef09c48764347f473d51e8786",
+                "reference": "89939ad0dbf92f6ef09c48764347f473d51e8786",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "ext-json": "*",
+                "phpunit/phpunit": "^4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "kbATeam\\TypeCast\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gregor J."
+                }
+            ],
+            "description": "Typecast the values of any given data structure.",
+            "time": "2018-11-13T14:14:46+00:00"
+        },
         {
             "name": "phpsap/interfaces",
             "version": "dev-master",
