@@ -32,15 +32,29 @@ class ConnectionPool
     private static $connections = [];
 
     /**
+     * Determine whether given connection ID is valid or not.
+     * @param $connectionId
+     * @throws \InvalidArgumentException
+     */
+    private static function validateConnectionId($connectionId)
+    {
+        if ((!is_int($connectionId) && !is_string($connectionId))
+            || trim($connectionId) === ''
+        ) {
+            throw new \InvalidArgumentException(
+                'Expected connection ID to be either string or integer.'
+            );
+        }
+    }
+
+    /**
      * Determine whether a connection using the given connection ID already exists.
      * @param int|string $connectionId
      * @return bool
      */
     public static function has($connectionId)
     {
-        if (!is_int($connectionId) && !is_string($connectionId)) {
-            return false;
-        }
+        static::validateConnectionId($connectionId);
         return array_key_exists($connectionId, static::$connections);
     }
 
@@ -52,9 +66,7 @@ class ConnectionPool
      */
     public static function get($connectionId)
     {
-        if (!static::has($connectionId)) {
-            throw new ConnectionNotFoundException('Invalid connection ID');
-        }
+        static::validateConnectionId($connectionId);
         return static::$connections[$connectionId];
     }
 
@@ -65,6 +77,7 @@ class ConnectionPool
      */
     public static function add($connectionId, IConnection $connection)
     {
+        static::validateConnectionId($connectionId);
         if (!static::has($connectionId)) {
             static::$connections[$connectionId] = $connection;
         }
@@ -76,6 +89,7 @@ class ConnectionPool
      */
     public static function remove($connectionId)
     {
+        static::validateConnectionId($connectionId);
         if (static::has($connectionId)) {
             unset(static::$connections[$connectionId]);
         }
