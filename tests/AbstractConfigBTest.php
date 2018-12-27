@@ -1,6 +1,6 @@
 <?php
 /**
- * File src/AbstractConfigBTest.php
+ * File tests/AbstractConfigBTest.php
  *
  * Test the abstract config type B class.
  *
