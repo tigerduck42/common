@@ -98,10 +98,21 @@ abstract class AbstractConfigContainer implements ContainerInterface, \JsonSeria
     /**
      * Sets a configuration value.
      * @param string $key
-     * @param mixed $value
+     * @param string|int|float|bool $value
      */
     protected function set($key, $value)
     {
+        if (!is_string($key) || empty($key)) {
+            throw new \InvalidArgumentException(
+                'Expected configuration key to be a string value.'
+            );
+        }
+        if (!is_string($value) && !is_int($value) && !is_float($value) && !is_bool($value)) {
+            throw new \InvalidArgumentException(
+                'Expected configuration value to be either a'
+                .' string, floating point, integer or boolean value.'
+            );
+        }
         $this->config[$key] = $value;
     }
 
@@ -118,6 +129,11 @@ abstract class AbstractConfigContainer implements ContainerInterface, \JsonSeria
      */
     public function get($key)
     {
+        if (!is_string($key) || empty($key)) {
+            throw new \InvalidArgumentException(
+                'Expected configuration key to be a string value.'
+            );
+        }
         if (!$this->has($key)) {
             throw new NotFoundException(sprintf(
                 'No entry was found for configuration key \'%s\'.',
@@ -141,6 +157,11 @@ abstract class AbstractConfigContainer implements ContainerInterface, \JsonSeria
      */
     public function has($key)
     {
+        if (!is_string($key) || empty($key)) {
+            throw new \InvalidArgumentException(
+                'Expected configuration key to be a string value.'
+            );
+        }
         return array_key_exists($key, $this->config);
     }
 
