@@ -38,6 +38,7 @@ abstract class AbstractConfig implements \JsonSerializable, IConfig
      */
     public function __construct($config = null)
     {
+        $this->config = [];
         if (is_array($config)) {
             $this->loadArray($config);
         } elseif (is_string($config)) {
