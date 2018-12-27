@@ -136,12 +136,14 @@ abstract class AbstractConfig extends AbstractConfigContainer implements IConfig
 
     /**
      * Set the trace level (0-3)
-     * @param int the trace level
+     * @param int|string the trace level
      * @throws \InvalidArgumentException
      */
     public function setTrace($value)
     {
-        if (!preg_match('~^[0-3]$~', $value, $match)) {
+        if ((!is_int($value) && !is_string($value))
+           || !preg_match('~^[0-3]$~', $value, $match)
+        ) {
             throw new \InvalidArgumentException(
                 'The trace level can only be 0-3.'
             );
