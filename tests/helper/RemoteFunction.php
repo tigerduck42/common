@@ -2,7 +2,7 @@
 /**
  * File tests/helper/RemoteFunction.php
  *
- * DESCRIPTION
+ * Helper class extending the abstract function class for testing.
  *
  * @package common
  * @author  Gregor J.
@@ -16,7 +16,7 @@ use phpsap\classes\AbstractFunction;
 /**
  * Class tests\phpsap\classes\helper\RemoteFunction
  *
- * DESCRIPTION
+ * Helper class extending the abstract function class for testing.
  *
  * @package tests\phpsap\classes\helper
  * @author  Gregor J.
