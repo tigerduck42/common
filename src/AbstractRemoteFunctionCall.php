@@ -121,7 +121,7 @@ abstract class AbstractRemoteFunctionCall implements IFunction
     }
 
     /**
-     * Get the typecast of the exptected return values.
+     * Get the typecast of the expected return values.
      * @return \kbATeam\TypeCast\ITypeCast|null
      */
     abstract protected function getReturnTypecast();
