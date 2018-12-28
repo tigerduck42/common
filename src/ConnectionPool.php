@@ -51,6 +51,7 @@ class ConnectionPool
      * Determine whether a connection using the given connection ID already exists.
      * @param int|string $connectionId
      * @return bool
+     * @throws \InvalidArgumentException
      */
     public static function has($connectionId)
     {
@@ -62,11 +63,17 @@ class ConnectionPool
      * Get the connection with the given connection ID.
      * @param int|string $connectionId
      * @return \phpsap\interfaces\IConnection
-     * @throws \phpsap\exceptions\ConnectionNotFoundException in case of a non-existing ID
+     * @throws \InvalidArgumentException
+     * @throws \phpsap\exceptions\ConnectionNotFoundException
      */
     public static function get($connectionId)
     {
-        static::validateConnectionId($connectionId);
+        if (!static::has($connectionId)) {
+            throw new ConnectionNotFoundException(sprintf(
+                'Connection ID \'%s\' does not exist.',
+                $connectionId
+            ));
+        }
         return static::$connections[$connectionId];
     }
 
@@ -74,6 +81,7 @@ class ConnectionPool
      * Set the connection using the given connection ID.
      * @param int|string $connectionId
      * @param \phpsap\interfaces\IConnection $connection
+     * @throws \InvalidArgumentException
      */
     public static function add($connectionId, IConnection $connection)
     {
@@ -86,6 +94,7 @@ class ConnectionPool
     /**
      * Remove a connection.
      * @param int|string $connectionId
+     * @throws \InvalidArgumentException
      */
     public static function remove($connectionId)
     {
