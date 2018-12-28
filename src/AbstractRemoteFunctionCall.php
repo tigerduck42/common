@@ -52,12 +52,6 @@ abstract class AbstractRemoteFunctionCall implements IFunction
     }
 
     /**
-     * The SAP remote function name.
-     * @return string
-     */
-    abstract public function getName();
-
-    /**
      * Remove the function instance.
      * @return \phpsap\classes\AbstractRemoteFunctionCall $this
      */
@@ -119,6 +113,12 @@ abstract class AbstractRemoteFunctionCall implements IFunction
         }
         return $this->function;
     }
+
+    /**
+     * The SAP remote function name.
+     * @return string
+     */
+    abstract public function getName();
 
     /**
      * Get the typecast of the expected return values.
