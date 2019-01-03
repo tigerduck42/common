@@ -11,7 +11,7 @@
 
 namespace phpsap\exceptions;
 
-use phpsap\interfaces\IUnknownFunctionException;
+use phpsap\interfaces\exceptions\IUnknownFunctionException;
 
 /**
  * Class phpsap\exceptions\UnknownFunctionException

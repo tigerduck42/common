@@ -11,7 +11,7 @@
 
 namespace phpsap\exceptions;
 
-use phpsap\interfaces\IConnectionFailedException;
+use phpsap\interfaces\exceptions\IConnectionFailedException;
 
 /**
  * Class phpsap\exceptions\ConnectionFailedException

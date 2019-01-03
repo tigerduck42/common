@@ -11,7 +11,7 @@
 
 namespace phpsap\exceptions;
 
-use phpsap\interfaces\IFunctionCallException;
+use phpsap\interfaces\exceptions\IFunctionCallException;
 
 /**
  * Class phpsap\exceptions\FunctionCallException

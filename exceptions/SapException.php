@@ -11,7 +11,7 @@
 
 namespace phpsap\exceptions;
 
-use phpsap\interfaces\ISapException;
+use phpsap\interfaces\exceptions\ISapException;
 
 /**
  * Class phpsap\exceptions\SapException
