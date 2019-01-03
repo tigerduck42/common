@@ -181,6 +181,7 @@ abstract class AbstractConfigContainer implements ContainerInterface, \JsonSeria
      * Generate the type of configuration needed by the PHP module in order to
      * establish a connection to SAP.
      * @return mixed
+     * @throws \phpsap\exceptions\IncompleteConfigException
      */
     abstract public function generateConfig();
 }
