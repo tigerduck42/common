@@ -94,6 +94,24 @@ abstract class AbstractConnection implements IConnection
     }
 
     /**
+     * Prepare a remote function call and return a function instance.
+     * @param string $name
+     * @return \phpsap\classes\AbstractFunction
+     * @throws \InvalidArgumentException
+     * @throws \phpsap\exceptions\ConnectionFailedException
+     * @throws \phpsap\exceptions\UnknownFunctionException
+     */
+    public function prepareFunction($name)
+    {
+        if (!is_string($name) || empty($name)) {
+            throw new \InvalidArgumentException(
+                'Missing or malformed SAP remote function name'
+            );
+        }
+        return $this->createFunctionInstance($name);
+    }
+
+    /**
      * @throws \phpsap\exceptions\ConnectionFailedException
      */
     abstract public function connect();
@@ -118,5 +136,5 @@ abstract class AbstractConnection implements IConnection
      * @throws \phpsap\exceptions\ConnectionFailedException
      * @throws \phpsap\exceptions\UnknownFunctionException
      */
-    abstract public function prepareFunction($name);
+    abstract protected function createFunctionInstance($name);
 }
