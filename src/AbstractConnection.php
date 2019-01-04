@@ -44,6 +44,7 @@ abstract class AbstractConnection implements IConnection
     /**
      * Initialize this class with a configuration.
      * @param \phpsap\interfaces\IConfig $config
+     * @throws \phpsap\interfaces\exceptions\IIncompleteConfigException
      */
     public function __construct(IConfig $config)
     {
