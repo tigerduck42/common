@@ -69,11 +69,11 @@ class Connection extends AbstractConnection
     /**
      * Prepare a remote function call and return a function instance.
      * @param string $name
-     * @return \phpsap\classes\AbstractFunction
+     * @return \tests\phpsap\classes\helper\RemoteFunction
      * @throws \phpsap\exceptions\ConnectionFailedException
      * @throws \phpsap\exceptions\UnknownFunctionException
      */
-    public function prepareFunction($name)
+    protected function createFunctionInstance($name)
     {
         return new RemoteFunction($this->connection, $name);
     }
