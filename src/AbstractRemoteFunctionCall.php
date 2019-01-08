@@ -66,8 +66,8 @@ abstract class AbstractRemoteFunctionCall implements IFunction
      * @param string                           $name
      * @param array|bool|float|int|string|null $value
      * @return \phpsap\classes\AbstractRemoteFunctionCall $this
-     * @throws \phpsap\interfaces\IConnectionFailedException
-     * @throws \phpsap\interfaces\IUnknownFunctionException
+     * @throws \phpsap\interfaces\exceptions\IConnectionFailedException
+     * @throws \phpsap\interfaces\exceptions\IUnknownFunctionException
      */
     public function setParam($name, $value)
     {
@@ -80,8 +80,8 @@ abstract class AbstractRemoteFunctionCall implements IFunction
      * Invoke SAP remote function call.
      * @param null|array $params Optional parameter array.
      * @return array result.
-     * @throws \phpsap\interfaces\IConnectionFailedException
-     * @throws \phpsap\interfaces\IUnknownFunctionException
+     * @throws \phpsap\interfaces\exceptions\IConnectionFailedException
+     * @throws \phpsap\interfaces\exceptions\IUnknownFunctionException
      * @throws \phpsap\exceptions\FunctionCallException
      */
     public function invoke($params = null)
@@ -101,8 +101,8 @@ abstract class AbstractRemoteFunctionCall implements IFunction
     /**
      * Get the function instance.
      * @return \phpsap\classes\AbstractFunction
-     * @throws \phpsap\interfaces\IConnectionFailedException
-     * @throws \phpsap\interfaces\IUnknownFunctionException
+     * @throws \phpsap\interfaces\exceptions\IConnectionFailedException
+     * @throws \phpsap\interfaces\exceptions\IUnknownFunctionException
      */
     protected function &getFunction()
     {
