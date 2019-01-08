@@ -103,12 +103,12 @@ abstract class AbstractConnection implements IConnection
      */
     public function prepareFunction($name)
     {
-        if (!is_string($name) || empty($name)) {
+        if (!is_string($name) || empty(trim($name))) {
             throw new \InvalidArgumentException(
                 'Missing or malformed SAP remote function name'
             );
         }
-        return $this->createFunctionInstance($name);
+        return $this->createFunctionInstance(trim($name));
     }
 
     /**
