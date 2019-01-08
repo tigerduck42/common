@@ -15,6 +15,7 @@ use phpsap\classes\AbstractConnection;
 use phpsap\interfaces\IConnection;
 use tests\phpsap\classes\helper\Connection;
 use tests\phpsap\classes\helper\ConfigA;
+use tests\phpsap\classes\helper\RemoteFunction;
 
 /**
  * Class tests\phpsap\classes\AbstractConnectionTest
@@ -113,5 +114,50 @@ class AbstractConnectionTest extends \PHPUnit_Framework_TestCase
         $ressource = $connection->getConnection();
         static::assertTrue($connection->isConnected());
         static::assertSame('success', $ressource);
+    }
+
+    /**
+     * Test preparing a function.
+     */
+    public function testPrepareFunction()
+    {
+        $connection = new Connection(new ConfigA());
+        static::assertInstanceOf(Connection::class, $connection);
+        $function = $connection->prepareFunction('mhcbyejv');
+        static::assertInstanceOf(RemoteFunction::class, $function);
+        static::assertSame('mhcbyejv', $function->getName());
+    }
+
+    /**
+     * Data provider of invalid function names.
+     * @return array
+     */
+    public static function invalidFunctionNames()
+    {
+        return [
+            [' '],
+            [85],
+            [1.4],
+            [['xlpbzllb']],
+            [true],
+            [false],
+            [null],
+            ["\t"],
+            [new \stdClass()]
+        ];
+    }
+
+    /**
+     * Test exception thrown upon invalid function names.
+     * @param mixed $name
+     * @dataProvider invalidFunctionNames
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Missing or malformed SAP remote function name
+     */
+    public function testInvalidFunctionNames($name)
+    {
+        $connection = new Connection(new ConfigA());
+        static::assertInstanceOf(Connection::class, $connection);
+        $connection->prepareFunction($name);
     }
 }
