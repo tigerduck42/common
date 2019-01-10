@@ -52,7 +52,7 @@ class AbstractRemoteFunctionCallTest extends \PHPUnit_Framework_TestCase
     {
         $rfc = new RemoteFunctionCall(new ConfigA());
         $rfc->returnName = 'awvovkms';
-        $function = &$rfc->getFunction();
+        $function = $rfc->getFunction();
         static::assertInstanceOf(IFunction::class, $function);
         static::assertInstanceOf(AbstractFunction::class, $function);
         static::assertInstanceOf(RemoteFunction::class, $function);

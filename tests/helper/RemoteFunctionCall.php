@@ -70,7 +70,7 @@ class RemoteFunctionCall extends AbstractRemoteFunctionCall
      * @throws \phpsap\interfaces\IConnectionFailedException
      * @throws \phpsap\interfaces\IUnknownFunctionException
      */
-    public function &getFunction()
+    public function getFunction()
     {
         return parent::getFunction();
     }
