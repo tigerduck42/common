@@ -41,12 +41,12 @@ abstract class AbstractFunction implements IFunction
 
     /**
      * Initialize this class with a connection instance and the function name.
-     * @param mixed $connection Referenced connection ressource.
+     * @param mixed $connection Connection ressource/class
      * @param string $name
      */
-    public function __construct(&$connection, $name)
+    public function __construct($connection, $name)
     {
-        $this->connection = &$connection;
+        $this->connection = $connection;
         $this->name = $name;
         $this->reset();
     }

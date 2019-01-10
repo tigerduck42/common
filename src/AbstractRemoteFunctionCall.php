@@ -104,7 +104,7 @@ abstract class AbstractRemoteFunctionCall implements IFunction
      * @throws \phpsap\interfaces\exceptions\IConnectionFailedException
      * @throws \phpsap\interfaces\exceptions\IUnknownFunctionException
      */
-    protected function &getFunction()
+    protected function getFunction()
     {
         if ($this->function === null) {
             //now connect and prepare the function
