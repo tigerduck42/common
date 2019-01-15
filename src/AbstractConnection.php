@@ -112,6 +112,8 @@ abstract class AbstractConnection implements IConnection
     }
 
     /**
+     * Establish a connection to the configured system.
+     * In case the connection is already open, close it first.
      * @throws \phpsap\exceptions\ConnectionFailedException
      */
     abstract public function connect();
