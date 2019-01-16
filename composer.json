@@ -1,14 +1,16 @@
 {
-  "name": "phpsap/common",
+  "name": "php-sap/common",
   "description": "Exceptions and abstract classes containing logic for PHP/SAP that is not specific to the underlying PHP module.",
   "type": "library",
   "license": "MIT",
   "authors": [
     {
       "name": "Gregor J.",
-      "email": "gregor-j@users.noreply.github.com"
+      "email": "gregor-j@users.noreply.github.com",
+      "role": "developer"
     }
   ],
+  "homepage": "https://php-sap.github.io",
   "support": {
     "docs": "https://php-sap.github.io",
     "issues": "https://github.com/php-sap/common/issues",
@@ -16,17 +18,13 @@
   },
   "keywords": [
     "phpsap",
-    "php-sap",
-    "exceptions",
-    "abstract",
-    "common",
-    "classes"
+    "php-sap"
   ],
   "minimum-stability": "stable",
   "require": {
     "php": ">=5.5.0",
     "ext-json": "*",
-    "phpsap/interfaces": "dev-master",
+    "php-sap/interfaces": "dev-master",
     "psr/container": "^1.0",
     "kba-team/typecast": "^1.0"
   },
@@ -45,6 +43,9 @@
     "phpunit/phpunit": "^4.8"
   },
   "scripts": {
-    "tests": "vendor/bin/phpunit --coverage-text"
+    "tests": "vendor/bin/phpunit"
+  },
+  "scripts-descriptions": {
+    "tests": "Run all unit tests."
   }
 }
