@@ -20,8 +20,10 @@
     "php": ">=5.5.0",
     "ext-json": "*",
     "php-sap/interfaces": "^1.0",
-    "psr/container": "^1.0",
-    "kba-team/typecast": "^1.0"
+    "psr/container": "^1.0"
+  },
+  "suggest": {
+    "kba-team/typecast": "Automatically typecast the return values of a SAP remote function call when extending AbstractRemoteFunctionCall."
   },
   "autoload": {
     "psr-4": {
