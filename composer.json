@@ -19,7 +19,7 @@
   "require": {
     "php": ">=5.5.0",
     "ext-json": "*",
-    "php-sap/interfaces": "dev-master",
+    "php-sap/interfaces": "^1.0",
     "psr/container": "^1.0",
     "kba-team/typecast": "^1.0"
   },

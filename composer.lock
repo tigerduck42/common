@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9380c4b5654d08a2baa14638f38a3311",
+    "content-hash": "603694f0ab717b2775307a4adf1f789e",
     "packages": [
         {
             "name": "kba-team/typecast",
@@ -46,24 +46,24 @@
             "time": "2018-11-13T14:14:46+00:00"
         },
         {
-            "name": "phpsap/interfaces",
-            "version": "dev-master",
+            "name": "php-sap/interfaces",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-sap/interfaces.git",
-                "reference": "e3f76da855249726369710f5f4c7f1c78c1ef026"
+                "reference": "4df96cbf6eb792463641ab55611173e7e6fd2761"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-sap/interfaces/zipball/e3f76da855249726369710f5f4c7f1c78c1ef026",
-                "reference": "e3f76da855249726369710f5f4c7f1c78c1ef026",
+                "url": "https://api.github.com/repos/php-sap/interfaces/zipball/4df96cbf6eb792463641ab55611173e7e6fd2761",
+                "reference": "4df96cbf6eb792463641ab55611173e7e6fd2761",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.5.0"
             },
-            "replace": {
-                "kba-team/php-sap": "1.*"
+            "conflict": {
+                "kba-team/php-sap": "*"
             },
             "type": "library",
             "autoload": {
@@ -78,16 +78,18 @@
             "authors": [
                 {
                     "name": "Gregor J.",
-                    "email": "gregor-j@users.noreply.github.com"
+                    "email": "gregor-j@users.noreply.github.com",
+                    "role": "developer"
                 }
             ],
             "description": "Interfaces for implementing the PHP/SAP API. See https://php-sap.github.io for details.",
+            "homepage": "https://php-sap.github.io",
             "keywords": [
                 "PHPSAP",
                 "interfaces",
                 "php-sap"
             ],
-            "time": "2019-01-15T14:38:46+00:00"
+            "time": "2019-01-16T08:33:23+00:00"
         },
         {
             "name": "psr/container",
@@ -1322,9 +1324,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "phpsap/interfaces": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
