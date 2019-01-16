@@ -75,4 +75,14 @@ class RemoteFunction extends AbstractFunction
     {
         return parent::getParam($name, $default);
     }
+
+    /**
+     * Get the PHP module remote function ressource/object.
+     * @return mixed
+     * @throws \phpsap\exceptions\UnknownFunctionException
+     */
+    protected function getFunction()
+    {
+        return 'TRBp3hoJ';
+    }
 }

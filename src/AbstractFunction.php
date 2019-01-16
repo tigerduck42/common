@@ -25,30 +25,37 @@ use phpsap\interfaces\IFunction;
 abstract class AbstractFunction implements IFunction
 {
     /**
-     * @var mixed
+     * @var mixed PHP module connection ressource/object
      */
     protected $connection;
 
     /**
-     * @var string
+     * @var mixed PHP module remote function ressource/object
+     */
+    protected $function;
+
+    /**
+     * @var string remote function name
      */
     protected $name;
 
     /**
-     * @var array
+     * @var array remote function parameters
      */
     protected $params;
 
     /**
      * Initialize this class with a connection instance and the function name.
-     * @param mixed $connection Connection ressource/class
+     * @param mixed $connection Connection resource/object
      * @param string $name
+     * @throws \phpsap\exceptions\UnknownFunctionException
      */
     public function __construct($connection, $name)
     {
         $this->connection = $connection;
         $this->name = $name;
         $this->reset();
+        $this->function = $this->getFunction();
     }
 
     /**
@@ -90,7 +97,8 @@ abstract class AbstractFunction implements IFunction
     }
 
     /**
-     * Get a parameter previously defined using setParam()
+     * Get a parameter previously defined using setParam().
+     * In case the requested parameter has not been set, return the defined default value.
      * @param string $name
      * @param null   $default
      * @return mixed|null
@@ -141,4 +149,11 @@ abstract class AbstractFunction implements IFunction
      * @throws \phpsap\exceptions\FunctionCallException
      */
     abstract protected function execute();
+
+    /**
+     * Get the PHP module remote function ressource/object.
+     * @return mixed
+     * @throws \phpsap\exceptions\UnknownFunctionException
+     */
+    abstract protected function getFunction();
 }
