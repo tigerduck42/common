@@ -87,15 +87,8 @@ abstract class AbstractRemoteFunctionCall implements IFunction
     public function invoke($params = null)
     {
         //invoke the remove function call
-        $result = $this->getFunction()
+        return $this->getFunction()
             ->invoke($params);
-        $this->reset();
-        //cast the return values to the types defined in the implementing class
-        $typecast = $this->getReturnTypecast();
-        if ($typecast !== null) {
-            return $typecast->cast($result);
-        }
-        return $result;
     }
 
     /**
@@ -119,12 +112,6 @@ abstract class AbstractRemoteFunctionCall implements IFunction
      * @return string
      */
     abstract public function getName();
-
-    /**
-     * Get the typecast of the expected return values.
-     * @return \kbATeam\TypeCast\ITypeCast|null
-     */
-    abstract protected function getReturnTypecast();
 
     /**
      * Create a connection instance using the given config.

@@ -117,22 +117,11 @@ class AbstractRemoteFunctionCallTest extends \PHPUnit_Framework_TestCase
     /**
      * Test invoking a remote function call without parameters.
      */
-    public function testInvokeWithoutTypecast()
+    public function testInvoke()
     {
         $rfc = new RemoteFunctionCall(new ConfigA());
         $rfc->getFunction()->results = ['gpgtowzq' => 'C5AWVD1h'];
         $results = $rfc->invoke();
         static::assertSame(['gpgtowzq' => 'C5AWVD1h'], $results);
-    }
-
-    public function testInvokeWithTypecast()
-    {
-        $rfc = new RemoteFunctionCall(new ConfigA());
-        $rfc->getFunction()->results = ['rjgcdeyl' => "6.19"];
-        $rfc->returnTypecast = new TypeCastArray();
-        $rfc->returnTypecast['rjgcdeyl'] = new TypeCastValue('float');
-        $results = $rfc->invoke();
-        static::assertArrayHasKey('rjgcdeyl', $results);
-        static::assertSame(6.19, $results['rjgcdeyl']);
     }
 }

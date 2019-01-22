@@ -31,11 +31,6 @@ class RemoteFunctionCall extends AbstractRemoteFunctionCall
     public $returnName = 'cketfemo';
 
     /**
-     * @var null|\kbATeam\TypeCast\ITypeCast
-     */
-    public $returnTypecast;
-
-    /**
      * The SAP remote function name.
      * @return string
      */
@@ -45,18 +40,10 @@ class RemoteFunctionCall extends AbstractRemoteFunctionCall
     }
 
     /**
-     * Get the typecast of the expected return values.
-     * @return \kbATeam\TypeCast\ITypeCast|null
-     */
-    protected function getReturnTypecast()
-    {
-        return $this->returnTypecast;
-    }
-
-    /**
      * Create a connection instance using the given config.
      * @param \phpsap\interfaces\IConfig $config
      * @return \phpsap\interfaces\IConnection
+     * @throws \phpsap\interfaces\exceptions\IIncompleteConfigException
      */
     protected function createConnectionInstance(IConfig $config)
     {
@@ -65,10 +52,10 @@ class RemoteFunctionCall extends AbstractRemoteFunctionCall
 
     /**
      * Make protected function public for testing.
-     * Get the function instance.
-     * @return \tests\phpsap\classes\helper\RemoteFunction
-     * @throws \phpsap\interfaces\IConnectionFailedException
-     * @throws \phpsap\interfaces\IUnknownFunctionException
+     * Get the function instance
+     * @return \phpsap\classes\AbstractFunction
+     * @throws \phpsap\interfaces\exceptions\IConnectionFailedException
+     * @throws \phpsap\interfaces\exceptions\IUnknownFunctionException
      */
     public function getFunction()
     {
