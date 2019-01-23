@@ -15,11 +15,8 @@ use kbATeam\TypeCast\TypeCastArray;
 use kbATeam\TypeCast\TypeCastValue;
 use phpsap\classes\AbstractFunction;
 use phpsap\classes\AbstractRemoteFunctionCall;
-use phpsap\classes\ConnectionPool;
-use phpsap\exceptions\ConnectionNotFoundException;
 use phpsap\interfaces\IFunction;
 use tests\phpsap\classes\helper\ConfigA;
-use tests\phpsap\classes\helper\Connection;
 use tests\phpsap\classes\helper\RemoteFunction;
 use tests\phpsap\classes\helper\RemoteFunctionCall;
 
@@ -57,38 +54,6 @@ class AbstractRemoteFunctionCallTest extends \PHPUnit_Framework_TestCase
         static::assertInstanceOf(AbstractFunction::class, $function);
         static::assertInstanceOf(RemoteFunction::class, $function);
         static::assertSame('awvovkms', $function->getName());
-    }
-
-    /**
-     * Test using the same connection config twice which should create only one
-     * connection.
-     */
-    public function testDuplicateConnectionInPool()
-    {
-        /**
-         * Create a connection from a config and add it to the connection pool.
-         */
-        $config = new ConfigA();
-        $connection = new Connection($config);
-        ConnectionPool::add($connection->getId(), $connection);
-        /**
-         * Create a new RFC from the same config, which should add the same
-         * connection ID to the pool.
-         */
-        $rfc = new RemoteFunctionCall($config);
-        /**
-         * Now remove the connection ID we created and see if the rfc runs into an
-         * exception.
-         */
-        ConnectionPool::remove($connection->getId());
-        $this->setExpectedException(
-            ConnectionNotFoundException::class,
-            sprintf(
-                'Connection ID \'%s\' does not exist.',
-                $connection->getId()
-            )
-        );
-        $rfc->getFunction();
     }
 
     /**

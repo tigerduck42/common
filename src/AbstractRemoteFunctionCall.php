@@ -26,6 +26,11 @@ use phpsap\interfaces\IFunction;
 abstract class AbstractRemoteFunctionCall implements IFunction
 {
     /**
+     * @var \phpsap\interfaces\IConnection
+     */
+    protected $connection;
+
+    /**
      * @var string The connection ID of the current SAP remote connection.
      */
     protected $connectionId;
@@ -42,13 +47,7 @@ abstract class AbstractRemoteFunctionCall implements IFunction
     public function __construct(IConfig $config)
     {
         //create a new instance of the connection without actually connecting
-        $connection = $this->createConnectionInstance($config);
-        //determine the connection ID of the connection
-        $this->connectionId = $connection->getId();
-        //add the connection to the pool in case it doesn't exist there yet
-        if (!ConnectionPool::has($this->connectionId)) {
-            ConnectionPool::add($this->connectionId, $connection);
-        }
+        $this->connection = $this->createConnectionInstance($config);
     }
 
     /**
@@ -100,9 +99,7 @@ abstract class AbstractRemoteFunctionCall implements IFunction
     protected function getFunction()
     {
         if ($this->function === null) {
-            //now connect and prepare the function
-            $this->function = ConnectionPool::get($this->connectionId)
-                ->prepareFunction($this->getName());
+            $this->function = $this->connection->prepareFunction($this->getName());
         }
         return $this->function;
     }
