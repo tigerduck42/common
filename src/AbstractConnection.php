@@ -39,7 +39,7 @@ abstract class AbstractConnection implements IConnection
     /**
      * @var string SapRfcConnection ID.
      */
-    protected $id;
+    protected $connectionId;
 
     /**
      * Initialize this class with a configuration.
@@ -59,10 +59,10 @@ abstract class AbstractConnection implements IConnection
      */
     public function getId()
     {
-        if ($this->id === null) {
-            $this->id = md5(serialize($this->config));
+        if ($this->connectionId === null) {
+            $this->connectionId = md5(serialize($this->config));
         }
-        return $this->id;
+        return $this->connectionId;
     }
 
     /**
