@@ -21,7 +21,8 @@
   "minimum-stability": "stable",
   "require": {
     "php": ">=5.5.0",
-    "php-sap/interfaces": "dev-master"
+    "php-sap/interfaces": "dev-master",
+    "ext-json": "*"
   },
   "suggest": {
     "php-sap/datetime": "Cast and/or export SAP week date, time and timestamp formats to/from DateTime."

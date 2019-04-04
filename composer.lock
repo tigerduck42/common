@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "be012fa73e4525f70d51ad124f30b140",
+    "content-hash": "aedb5b935a68cb10bb7148f3649e7d48",
     "packages": [
         {
             "name": "php-sap/interfaces",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-sap/interfaces.git",
-                "reference": "55c3f9c6a1e1ad07fb5c9c621865cdb3393658c0"
+                "reference": "847e6cee24bb41519faeabb50fecd7d9ba9f88e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-sap/interfaces/zipball/55c3f9c6a1e1ad07fb5c9c621865cdb3393658c0",
-                "reference": "55c3f9c6a1e1ad07fb5c9c621865cdb3393658c0",
+                "url": "https://api.github.com/repos/php-sap/interfaces/zipball/847e6cee24bb41519faeabb50fecd7d9ba9f88e0",
+                "reference": "847e6cee24bb41519faeabb50fecd7d9ba9f88e0",
                 "shasum": ""
             },
             "require": {
@@ -50,7 +50,7 @@
                 "interfaces",
                 "php-sap"
             ],
-            "time": "2019-04-04T08:48:37+00:00"
+            "time": "2019-04-04T12:52:50+00:00"
         }
     ],
     "packages-dev": [
@@ -1243,7 +1243,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.5.0"
+        "php": ">=5.5.0",
+        "ext-json": "*"
     },
     "platform-dev": []
 }
