@@ -11,12 +11,13 @@
 
 namespace phpsap\classes;
 
+use InvalidArgumentException;
 use phpsap\exceptions\ConnectionFailedException;
 use phpsap\interfaces\IConfig;
 use phpsap\interfaces\IConnection;
 
 /**
- * Class phpsap\classes\AbstractConnection
+ * Class AbstractConnection
  *
  * Abstract class to manage a single PHP/SAP connection.
  *
@@ -32,37 +33,17 @@ abstract class AbstractConnection implements IConnection
     protected $connection;
 
     /**
-     * @var array Configuration array.
+     * @var \phpsap\interfaces\IConfig
      */
     protected $config;
 
     /**
-     * @var string SapRfcConnection ID.
-     */
-    protected $connectionId;
-
-    /**
      * Initialize this class with a configuration.
      * @param \phpsap\interfaces\IConfig $config
-     * @throws \phpsap\interfaces\exceptions\IIncompleteConfigException
      */
     public function __construct(IConfig $config)
     {
-        $this->config = $config->generateConfig();
-    }
-
-    /**
-     * Returns the connection ID.
-     * The connection ID is derived from the configuration. The same configuration
-     * will result in the same connection ID.
-     * @return string
-     */
-    public function getId()
-    {
-        if ($this->connectionId === null) {
-            $this->connectionId = md5(serialize($this->config));
-        }
-        return $this->connectionId;
+        $this->config = $config;
     }
 
     /**
@@ -104,7 +85,7 @@ abstract class AbstractConnection implements IConnection
     public function prepareFunction($name)
     {
         if (!is_string($name) || empty(trim($name))) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Missing or malformed SAP remote function name'
             );
         }
