@@ -1,6 +1,6 @@
 <?php
 /**
- * File src/AbstractConfigA.php
+ * File src/ConfigA.php
  *
  * Type A configuration.
  *
@@ -14,16 +14,16 @@ namespace phpsap\classes;
 use phpsap\interfaces\IConfigA;
 
 /**
- * Class phpsap\classes\AbstractConfigA
+ * Class ConfigA
  *
- * Abstract class to configure connection parameters for SAP remote function calls
+ * Class to configure connection parameters for SAP remote function calls
  * using a specific SAP application server (type A).
  *
  * @package phpsap\classes
  * @author  Gregor J.
  * @license MIT
  */
-abstract class AbstractConfigA extends AbstractConfig implements IConfigA
+class ConfigA extends AbstractConfig implements IConfigA
 {
     /**
      * Get the host name of a specific SAP application server.

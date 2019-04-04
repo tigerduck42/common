@@ -11,10 +11,11 @@
 
 namespace phpsap\classes;
 
+use InvalidArgumentException;
 use phpsap\interfaces\IConfig;
 
 /**
- * Class phpsap\classes\AbstractConfig
+ * Class AbstractConfig
  *
  * Abstract class to configure basic connection parameters for SAP remote function
  * calls, that are common to both connection types (A, and B).
@@ -23,7 +24,7 @@ use phpsap\interfaces\IConfig;
  * @author  Gregor J.
  * @license MIT
  */
-abstract class AbstractConfig extends AbstractConfigContainer implements IConfig
+abstract class AbstractConfig extends AbstractConfigStorage implements IConfig
 {
     /**
      * Get the username.
@@ -98,7 +99,7 @@ abstract class AbstractConfig extends AbstractConfigContainer implements IConfig
         if (!is_string($value)
             || !preg_match('~^[A-Z]{2}$~', $value, $match)
         ) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Expected two letter country code as language.'
             );
         }
@@ -120,7 +121,7 @@ abstract class AbstractConfig extends AbstractConfigContainer implements IConfig
      * /H/hostname/S/portnumber/H/
      * @param string the saprouter
      */
-    public function setSaprouter($value)
+    protected function setSaprouter($value)
     {
         $this->set('saprouter', (string)$value);
     }
@@ -139,12 +140,12 @@ abstract class AbstractConfig extends AbstractConfigContainer implements IConfig
      * @param int|string the trace level
      * @throws \InvalidArgumentException
      */
-    public function setTrace($value)
+    protected function setTrace($value)
     {
         if ((!is_int($value) && !is_string($value))
            || !preg_match('~^[0-3]$~', $value, $match)
         ) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'The trace level can only be 0-3.'
             );
         }
@@ -172,7 +173,7 @@ abstract class AbstractConfig extends AbstractConfigContainer implements IConfig
      *
      * @param int the codepage
      */
-    public function setCodepage($value)
+    protected function setCodepage($value)
     {
         $this->set('codepage', (int)$value);
     }
@@ -190,7 +191,7 @@ abstract class AbstractConfig extends AbstractConfigContainer implements IConfig
      * Set the destination in RfcOpenConnection.
      * @param string the destination
      */
-    public function setDest($value)
+    protected function setDest($value)
     {
         $this->set('dest', (string)$value);
     }

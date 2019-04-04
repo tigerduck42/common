@@ -11,10 +11,11 @@
 
 namespace phpsap\classes;
 
+use InvalidArgumentException;
 use phpsap\interfaces\IFunction;
 
 /**
- * Class phpsap\classes\AbstractFunction
+ * Class AbstractFunction
  *
  * Abstract class to manage a single PHP/SAP remote function instance.
  *
@@ -43,6 +44,11 @@ abstract class AbstractFunction implements IFunction
      * @var array remote function parameters
      */
     protected $params;
+
+    /**
+     * @var array remote function API
+     */
+    protected $api;
 
     /**
      * Initialize this class with a connection instance and the function name.
@@ -87,7 +93,7 @@ abstract class AbstractFunction implements IFunction
     public function setParam($name, $value)
     {
         if (!is_string($name) || empty($name)) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'Expected function %s invoke parameter name to be string',
                 $this->getName()
             ));
@@ -125,7 +131,7 @@ abstract class AbstractFunction implements IFunction
             $params = [];
         }
         if (!is_array($params)) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'Expected function %s invoke parameters to be array, but got %s.',
                 $this->getName(),
                 gettype($params)
@@ -135,6 +141,29 @@ abstract class AbstractFunction implements IFunction
             $this->setParam($name, $value);
         }
         return $this->execute();
+    }
+
+    /**
+     * Returns an array of API elements that describe import, export and table
+     * variables of the remote function API.
+     * @return array
+     */
+    public function getRemoteApi()
+    {
+        if ($this->api === null) {
+            $this->api = $this->getFunctionInterface();
+        }
+        return $this->api;
+    }
+
+    public function loadCachedRemoteApi($jsonEncodedApi)
+    {
+        $api = json_decode($jsonEncodedApi);
+        if (is_array($api)) {
+            foreach ($api as $element) {
+
+            }
+        }
     }
 
     /**
@@ -156,4 +185,11 @@ abstract class AbstractFunction implements IFunction
      * @throws \phpsap\exceptions\UnknownFunctionException
      */
     abstract protected function getFunction();
+
+    /**
+     * Read the remote function API and return an array of API elements that describe
+     * its import, export and table variables.
+     * @return array
+     */
+    abstract protected function getFunctionInterface();
 }

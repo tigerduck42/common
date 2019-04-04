@@ -1,6 +1,6 @@
 <?php
 /**
- * File src/AbstractConfigB.php
+ * File src/ConfigB.php
  *
  * Type B configuration.
  *
@@ -14,16 +14,16 @@ namespace phpsap\classes;
 use phpsap\interfaces\IConfigB;
 
 /**
- * Class phpsap\classes\AbstractConfigB
+ * Class ConfigB
  *
- * Abstract class to configure connection parameters for SAP remote function calls
+ * Class to configure connection parameters for SAP remote function calls
  * using load balancing (type B).
  *
  * @package phpsap\classes
  * @author  Gregor J.
  * @license MIT
  */
-abstract class AbstractConfigB extends AbstractConfig implements IConfigB
+class ConfigB extends AbstractConfig implements IConfigB
 {
     /**
      * Get the name of SAP system, optional; default: destination
