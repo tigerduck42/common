@@ -14,7 +14,7 @@ namespace phpsap\exceptions;
 use phpsap\interfaces\exceptions\IIncompleteConfigException;
 
 /**
- * Class phpsap\exceptions\IncompleteConfigException
+ * Class IncompleteConfigException
  *
  * Exception thrown when the PHP/SAP config is incomplete.
  *

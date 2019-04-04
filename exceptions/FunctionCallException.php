@@ -14,7 +14,7 @@ namespace phpsap\exceptions;
 use phpsap\interfaces\exceptions\IFunctionCallException;
 
 /**
- * Class phpsap\exceptions\FunctionCallException
+ * Class FunctionCallException
  *
  * Exception thrown when a PHP/SAP function call failed.
  *

@@ -1,8 +1,8 @@
 <?php
 /**
- * File exceptions/ConfigKeyNotFoundExceptionException.php
+ * File exceptions/ConfigKeyNotFoundException.php
  *
- * No entry was found in the container.
+ * No entry was found in the configuration storage.
  *
  * @package common
  * @author  Gregor J.
@@ -11,17 +11,17 @@
 
 namespace phpsap\exceptions;
 
-use Psr\Container\NotFoundExceptionInterface;
+use phpsap\interfaces\exceptions\IConfigKeyNotFoundException;
 
 /**
- * Class phpsap\exceptions\ConfigKeyNotFoundException
+ * Class ConfigKeyNotFoundException
  *
- * No entry was found in the container.
+ * No entry was found in the configuration storage.
  *
  * @package phpsap\exceptions
  * @author  Gregor J.
  * @license MIT
  */
-class ConfigKeyNotFoundException extends SapException implements NotFoundExceptionInterface
+class ConfigKeyNotFoundException extends SapException implements IConfigKeyNotFoundException
 {
 }

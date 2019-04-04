@@ -14,7 +14,7 @@ namespace phpsap\exceptions;
 use phpsap\interfaces\exceptions\IUnknownFunctionException;
 
 /**
- * Class phpsap\exceptions\UnknownFunctionException
+ * Class UnknownFunctionException
  *
  * Exception thrown when a SAP remote function cannot be found.
  *

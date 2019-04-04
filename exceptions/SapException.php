@@ -14,7 +14,7 @@ namespace phpsap\exceptions;
 use phpsap\interfaces\exceptions\ISapException;
 
 /**
- * Class phpsap\exceptions\SapException
+ * Class SapException
  *
  * Generic SAP exception.
  *
