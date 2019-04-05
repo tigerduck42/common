@@ -195,6 +195,13 @@ class ApiElement implements IApiElement, JsonSerializable
      */
     public function addMember(ApiElement $member)
     {
+        if ($this->getDirection() !== static::DIR_TABLE
+            && $this->getDataType() !== 'array'
+        ) {
+            throw new InvalidArgumentException(sprintf(
+                'Only tables and array data types can have members!'
+            ));
+        }
         if (!array_key_exists('members', $this->element)) {
             $this->element['members'] = [];
         }
