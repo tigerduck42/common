@@ -228,6 +228,11 @@ class ApiElement implements IApiElement, JsonSerializable
      */
     public static function jsonUnserializeArray($jsonString)
     {
+        if (!is_string($jsonString)) {
+            throw new InvalidArgumentException(
+                'Expected JSON to be a string.'
+            );
+        }
         $elements = json_decode($jsonString, true);
         if (!is_array($elements)) {
             throw new InvalidArgumentException(

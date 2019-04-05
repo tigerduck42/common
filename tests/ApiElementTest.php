@@ -92,18 +92,116 @@ class ApiElementTest extends \PHPUnit_Framework_TestCase
         $members = $element->getMembers();
         static::assertInternalType('array', $members);
         $elementNames = ['ADDRESS', 'CODE', 'AREA', 'COUNTRY'];
-        foreach ($elementNames as $elementName) {
-            static::assertArrayHasKey($elementName, $members);
+        foreach ($members as $member) {
             /**
-             * @var ApiElement $memberElement
+             * @var \phpsap\classes\ApiElement $member
              */
-            $memberElement = $members[$elementName];
-            static::assertSame($elementName, $memberElement->getName());
-            static::assertSame(ApiElement::DIR_INPUT, $memberElement->getDirection());
-            static::assertSame('string', $memberElement->getDataType());
-            static::assertTrue($memberElement->isOptional());
-            static::assertNull($memberElement->getDescription());
-            static::assertEmpty($memberElement->getMembers());
+            static::assertContains($member->getName(), $elementNames);
+            static::assertSame(ApiElement::DIR_INPUT, $member->getDirection());
+            static::assertSame('string', $member->getDataType());
+            static::assertTrue($member->isOptional());
+            static::assertNull($member->getDescription());
+            static::assertEmpty($member->getMembers());
+        }
+    }
+
+    /**
+     * Test encoding API elements
+     */
+    public function testJsonEncode()
+    {
+        $elements = [];
+        $element = new ApiElement('IN_ADDRESS', ApiElement::DIR_INPUT, 'array', true);
+        $element->addMember(new ApiElement('ADDRESS', ApiElement::DIR_INPUT, 'string'));
+        $element->addMember(new ApiElement('CODE', ApiElement::DIR_INPUT, 'string'));
+        $element->addMember(new ApiElement('AREA', ApiElement::DIR_INPUT, 'string'));
+        $element->addMember(new ApiElement('COUNTRY', ApiElement::DIR_INPUT, 'string'));
+        $elements[] = $element;
+        $jsonString = json_encode($elements);
+        $expectedJsonString = '[{"name":"IN_ADDRESS",'
+                              .'"direction":"input",'
+                              .'"dataType":"array",'
+                              .'"optional":true,'
+                              .'"members":['
+                              .'{"name":"ADDRESS",'
+                              .'"direction":"input",'
+                              .'"dataType":"string",'
+                              .'"optional":true},'
+                              .'{"name":"CODE",'
+                              .'"direction":"input",'
+                              .'"dataType":"string",'
+                              .'"optional":true},'
+                              .'{"name":"AREA",'
+                              .'"direction":"input",'
+                              .'"dataType":"string",'
+                              .'"optional":true},'
+                              .'{"name":"COUNTRY",'
+                              .'"direction":"input",'
+                              .'"dataType":"string",'
+                              .'"optional":true}'
+                              .']}]';
+        static::assertJsonStringEqualsJsonString($expectedJsonString, $jsonString);
+    }
+
+    /**
+     * Test decoding an array of elements.
+     */
+    public function testJsonDecode()
+    {
+        $elementsJsonEncoded = '[{"name":"IN_ADDRESS",'
+                              .'"direction":"input",'
+                              .'"dataType":"array",'
+                              .'"optional":true,'
+                              .'"members":['
+                              .'{"name":"ADDRESS",'
+                              .'"direction":"input",'
+                              .'"dataType":"string",'
+                              .'"optional":true,'
+                               .'"description": "Street, house number, door number, stairs, etc."},'
+                              .'{"name":"CODE",'
+                              .'"direction":"input",'
+                              .'"dataType":"string",'
+                              .'"optional":true},'
+                              .'{"name":"AREA",'
+                              .'"direction":"input",'
+                              .'"dataType":"string",'
+                              .'"optional":true},'
+                              .'{"name":"COUNTRY",'
+                              .'"direction":"input",'
+                              .'"dataType":"string",'
+                              .'"optional":true}'
+                              .']}]';
+        $elements = ApiElement::jsonUnserializeArray($elementsJsonEncoded);
+        static::assertInternalType('array', $elements);
+        static::assertCount(1, $elements);
+        foreach ($elements as $element) {
+            /**
+             * @var \phpsap\classes\ApiElement $element
+             */
+            static::assertSame('IN_ADDRESS', $element->getName());
+            static::assertSame(ApiElement::DIR_INPUT, $element->getDirection());
+            static::assertSame('array', $element->getDataType());
+            $members = $element->getMembers();
+            static::assertInternalType('array', $members);
+            $elementNames = ['ADDRESS', 'CODE', 'AREA', 'COUNTRY'];
+            foreach ($members as $member) {
+                /**
+                 * @var \phpsap\classes\ApiElement $member
+                 */
+                static::assertContains($member->getName(), $elementNames);
+                static::assertSame(ApiElement::DIR_INPUT, $member->getDirection());
+                static::assertSame('string', $member->getDataType());
+                static::assertTrue($member->isOptional());
+                if ($member->getName() === 'ADDRESS') {
+                    static::assertSame(
+                        'Street, house number, door number, stairs, etc.',
+                        $member->getDescription()
+                    );
+                } else {
+                    static::assertNull($member->getDescription());
+                }
+                static::assertEmpty($member->getMembers());
+            }
         }
     }
 
@@ -290,5 +388,76 @@ class ApiElementTest extends \PHPUnit_Framework_TestCase
     {
         $element = new ApiElement('IN_ADDRESS', ApiElement::DIR_INPUT, $dataType);
         $element->addMember(new ApiElement('ADDRESS', ApiElement::DIR_INPUT, 'string'));
+    }
+
+    /**
+     * Data provider of invalid JSON encoded API elements.
+     * @return array
+     */
+    public static function invalidJsonEncodedApiElements()
+    {
+        return [
+            [
+                json_encode(new ApiElement('IN_INT', ApiElement::DIR_INPUT, 'int')),
+                'Given data is no API element.'
+            ],
+            [
+                [json_encode(new ApiElement('IN_INT', ApiElement::DIR_INPUT, 'int'))],
+                'Expected JSON to be a string.'
+            ],
+            [
+                '',
+                'Given string is no JSON encoded list of API elements.'
+            ],
+            [
+                ' ',
+                'Given string is no JSON encoded list of API elements.'
+            ],
+            [
+                'Hello World!',
+                'Given string is no JSON encoded list of API elements.'
+            ],
+            [
+                null,
+                'Expected JSON to be a string.'
+            ],
+            [
+                true,
+                'Expected JSON to be a string.'
+            ],
+            [
+                false,
+                'Expected JSON to be a string.'
+            ],
+            [
+                new stdClass(),
+                'Expected JSON to be a string.'
+            ],
+            [
+                12345,
+                'Expected JSON to be a string.'
+            ],
+            [
+                123.45,
+                'Expected JSON to be a string.'
+            ]
+        ];
+    }
+
+    /**
+     * Test invalid JSON encoded API elements.
+     * @param string $json
+     * @param string $message
+     * @dataProvider invalidJsonEncodedApiElements
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Given string is no JSON encoded list of API elements.
+     */
+    public function testInvalidJsonEncodedApiElement($json, $message)
+    {
+        $this->setExpectedException(
+            InvalidArgumentException::class,
+            $message
+        );
+        ApiElement::jsonUnserializeArray($json);
     }
 }
