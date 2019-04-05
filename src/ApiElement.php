@@ -231,7 +231,7 @@ class ApiElement implements IApiElement, JsonSerializable
         $elements = json_decode($jsonString, true);
         if (!is_array($elements)) {
             throw new InvalidArgumentException(
-                'Given string is no JSON encoded API element.'
+                'Given string is no JSON encoded list of API elements.'
             );
         }
         $result = [];
@@ -256,7 +256,7 @@ class ApiElement implements IApiElement, JsonSerializable
         ) {
             $element = new static(
                 $data['name'],
-                $data['type'],
+                $data['direction'],
                 $data['dataType']
             );
             if (array_key_exists('optional', $data)) {
