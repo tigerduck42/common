@@ -1,7 +1,8 @@
 <?php
 /**
- * File tests/AbstractConfigStorageTest.php*
- * Test the abstract config container class.
+ * File tests/AbstractConfigStorageTest.php
+ *
+ * Test the abstract config storage class.
  *
  * @package common
  * @author  Gregor J.
@@ -17,9 +18,9 @@ use Serializable;
 use tests\phpsap\classes\helper\ConfigStorage;
 
 /**
- * Class tests\phpsap\classes\AbstractConfigStorageTest
+ * Class AbstractConfigStorageTest
  *
- * Test the abstract config container class.
+ * Test the abstract config storage class.
  *
  * @package tests\phpsap\classes
  * @author  Gregor J.
