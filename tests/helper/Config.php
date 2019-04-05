@@ -24,13 +24,4 @@ use phpsap\classes\AbstractConfig;
  */
 class Config extends AbstractConfig
 {
-    /**
-     * Generate the type of configuration needed by the PHP module in order to
-     * establish a connection to SAP.
-     * @return mixed
-     */
-    public function generateConfig()
-    {
-        return $this->jsonSerialize();
-    }
 }
