@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use phpsap\classes\ApiElement;
 use phpsap\interfaces\IApiElement;
 use JsonSerializable;
+use stdClass;
 
 /**
  * Class tests\phpsap\classes\ApiElementTest
@@ -217,7 +218,7 @@ class ApiElementTest extends \PHPUnit_Framework_TestCase
             [null],
             [true],
             [false],
-            [new \stdClass()],
+            [new stdClass()],
             [['IN_INT']],
             [12345],
             [123.45]
@@ -251,7 +252,7 @@ class ApiElementTest extends \PHPUnit_Framework_TestCase
             [null],
             [true],
             [false],
-            [new \stdClass()],
+            [new stdClass()],
             [['input']],
             [12345],
             [123.45]
@@ -283,7 +284,7 @@ class ApiElementTest extends \PHPUnit_Framework_TestCase
             [null],
             [true],
             [false],
-            [new \stdClass()],
+            [new stdClass()],
             [['bool']],
             [12345],
             [123.45]
@@ -316,7 +317,7 @@ class ApiElementTest extends \PHPUnit_Framework_TestCase
             [1],
             [0],
             [null],
-            [new \stdClass()],
+            [new stdClass()],
             [12345],
             [123.45]
         ];
@@ -345,7 +346,7 @@ class ApiElementTest extends \PHPUnit_Framework_TestCase
             [123.45],
             [true],
             [false],
-            [new \stdClass()],
+            [new stdClass()],
             [['Hello World!']]
         ];
     }
