@@ -252,7 +252,7 @@ class ApiElement implements IApiElement, JsonSerializable
      * @return \phpsap\classes\ApiElement
      * @throws \InvalidArgumentException
      */
-    public static function fromArray($data)
+    protected static function fromArray($data)
     {
         if (is_array($data)
             && array_key_exists('name', $data)
