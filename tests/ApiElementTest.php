@@ -62,6 +62,23 @@ class ApiElementTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test setting and removing the description.
+     */
+    public function testDescription()
+    {
+        $element = new ApiElement('IN_INT', ApiElement::DIR_INPUT, 'int');
+        static::assertNull($element->getDescription());
+        $element->setDescription('Hello World!');
+        static::assertSame('Hello World!', $element->getDescription());
+        $element->setDescription('');
+        static::assertNull($element->getDescription());
+        $element->setDescription('Hello PHP!');
+        static::assertSame('Hello PHP!', $element->getDescription());
+        $element->setDescription(null);
+        static::assertNull($element->getDescription());
+    }
+
+    /**
      * Data provider of invalid element names.
      * @return array
      */
@@ -188,5 +205,34 @@ class ApiElementTest extends \PHPUnit_Framework_TestCase
     public function testInvalidOptionalFlag($optional)
     {
         new ApiElement('IN_INT', ApiElement::DIR_INPUT, 'int', $optional);
+    }
+
+    /**
+     * Data provider of invalid descriptions.
+     * @return array
+     */
+    public static function invalidDescriptions()
+    {
+        return [
+            [12345],
+            [123.45],
+            [true],
+            [false],
+            [new \stdClass()],
+            [['Hello World!']]
+        ];
+    }
+
+    /**
+     * Test invalid description.
+     * @param mixed $description
+     * @dataProvider invalidDescriptions
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Expected API element description to be a string!
+     */
+    public function testInvalidDescription($description)
+    {
+        $element = new ApiElement('IN_INT', ApiElement::DIR_INPUT, 'int');
+        $element->setDescription($description);
     }
 }

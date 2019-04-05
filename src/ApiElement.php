@@ -163,10 +163,17 @@ class ApiElement implements IApiElement, JsonSerializable
      */
     public function setDescription($description)
     {
-        if (!is_string($description) || empty(trim($description))) {
-            throw new InvalidArgumentException('Expected API element name to be a string!');
+        if ($description === null) {
+            $description = '';
         }
-        $this->element['description'] = trim($description);
+        if (!is_string($description)) {
+            throw new InvalidArgumentException('Expected API element description to be a string!');
+        }
+        if ($description === '') {
+            unset($this->element['description']);
+        } else {
+            $this->element['description'] = trim($description);
+        }
     }
 
     /**
