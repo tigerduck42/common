@@ -205,7 +205,7 @@ class ApiElement implements IApiElement, JsonSerializable
         if (!array_key_exists('members', $this->element)) {
             $this->element['members'] = [];
         }
-        $this->element['members'][$member->getName()] = $member;
+        $this->element['members'][] = $member;
     }
 
     /**
