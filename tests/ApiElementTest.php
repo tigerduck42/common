@@ -33,7 +33,7 @@ class ApiElementTest extends \PHPUnit_Framework_TestCase
     public function testMandatorySettings()
     {
         $element = new ApiElement('IN_INT', ApiElement::DIR_INPUT, 'int');
-        static::assertSame('IN_IN', $element->getName());
+        static::assertSame('IN_INT', $element->getName());
         static::assertSame(ApiElement::DIR_INPUT, $element->getDirection());
         static::assertSame('int', $element->getDataType());
     }
@@ -135,7 +135,7 @@ class ApiElementTest extends \PHPUnit_Framework_TestCase
             [''],
             [' bool'],
             ['bool '],
-            ['object']
+            ['object'],
             [null],
             [true],
             [false],
