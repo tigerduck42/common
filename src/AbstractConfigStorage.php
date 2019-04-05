@@ -155,7 +155,7 @@ abstract class AbstractConfigStorage implements Serializable
     public function unserialize($serialized)
     {
         $payload = unserialize($serialized);
-        if (!is_array($payload)) {
+        if (is_array($payload)) {
             $this->loadArray($payload);
         }
     }

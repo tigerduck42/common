@@ -1,7 +1,6 @@
 <?php
 /**
- * File tests/AbstractConfigContainerTest.php
- *
+ * File tests/AbstractConfigStorageTest.php*
  * Test the abstract config container class.
  *
  * @package common
@@ -11,13 +10,14 @@
 
 namespace tests\phpsap\classes;
 
-use phpsap\classes\AbstractConfigContainer;
+use phpsap\classes\AbstractConfigStorage;
 use phpsap\exceptions\ConfigKeyNotFoundException;
 use Psr\Container\ContainerInterface;
-use tests\phpsap\classes\helper\ConfigContainer;
+use Serializable;
+use tests\phpsap\classes\helper\ConfigStorage;
 
 /**
- * Class tests\phpsap\classes\AbstractConfigContainerTest
+ * Class tests\phpsap\classes\AbstractConfigStorageTest
  *
  * Test the abstract config container class.
  *
@@ -25,17 +25,17 @@ use tests\phpsap\classes\helper\ConfigContainer;
  * @author  Gregor J.
  * @license MIT
  */
-class AbstractConfigContainerTest extends \PHPUnit_Framework_TestCase
+class AbstractConfigStorageTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test config container class inheritance.
      */
     public function testInheritedClasses()
     {
-        $config = new ConfigContainer();
-        static::assertInstanceOf(ContainerInterface::class, $config);
-        static::assertInstanceOf(AbstractConfigContainer::class, $config);
-        static::assertInstanceOf(ConfigContainer::class, $config);
+        $config = new ConfigStorage();
+        static::assertInstanceOf(Serializable::class, $config);
+        static::assertInstanceOf(AbstractConfigStorage::class, $config);
+        static::assertInstanceOf(ConfigStorage::class, $config);
     }
 
     /**
@@ -46,11 +46,7 @@ class AbstractConfigContainerTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [null, '[]'],
-            ['{}', '[]'],
-            ['[]', '[]'],
             [[], '[]'],
-            ['["YkYpgeSz"]', '[]'],
-            ['{"qvypepzo":"K77wHitp"}', '{"qvypepzo":"K77wHitp"}'],
             [['qvypepzo' => 'd7sdKgbZ'], '{"qvypepzo":"d7sdKgbZ"}'],
             [['qvypepzo' => 'fmVwxjSG', 'nJd1KqJE' => 890], '{"qvypepzo":"fmVwxjSG"}']
         ];
@@ -65,9 +61,9 @@ class AbstractConfigContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidConstructorParameters($param, $expectedJson)
     {
-        $config = new ConfigContainer($param);
-        static::assertInstanceOf(ConfigContainer::class, $config);
-        static::assertSame($expectedJson, json_encode($config));
+        $config = new ConfigStorage($param);
+        static::assertInstanceOf(ConfigStorage::class, $config);
+        static::assertSame($expectedJson, $config->debugInternalConfig());
     }
 
     /**
@@ -77,13 +73,12 @@ class AbstractConfigContainerTest extends \PHPUnit_Framework_TestCase
     public static function invalidConstructorParameters()
     {
         return [
-            ['', 'Expected config to be a JSON encoded string!'],
-            ['945', 'Expected config to be an array!'],
-            ['APNyRGdV', 'Expected config to be a JSON encoded string!'],
-            [545, 'Expected configuration to either be an array, or a JSON encoded string!'],
-            [58.5, 'Expected configuration to either be an array, or a JSON encoded string!'],
-            [new \stdClass(), 'Expected configuration to either be an array, or a JSON encoded string!'],
-            ['{"IGbUKNhW": 784', 'Expected config to be a JSON encoded string!']
+            ['', 'Expected configuration to be an array!'],
+            ['945', 'Expected configuration to be an array!'],
+            ['APNyRGdV', 'Expected configuration to be an array!'],
+            [545, 'Expected configuration to be an array!'],
+            [58.5, 'Expected configuration to be an array!'],
+            [new \stdClass(), 'Expected configuration to be an array!']
         ];
     }
 
@@ -96,50 +91,23 @@ class AbstractConfigContainerTest extends \PHPUnit_Framework_TestCase
     public function testInvalidConstructorParameters($param, $message)
     {
         $this->setExpectedException(\InvalidArgumentException::class, $message);
-        new ConfigContainer($param);
+        new ConfigStorage($param);
     }
 
     /**
-     * Data provider of invalid parameters for internal function loadJson().
-     * @return array
-     */
-    public static function invalidParametersForInternalLoadJsonFunction()
-    {
-        return [
-            [964],
-            [4.4],
-            [null],
-            [''],
-            ['{"bIsXiNGS": "qGRF2Mks"'],
-            [new \stdClass()],
-            [[]]
-        ];
-    }
-
-    /**
-     * Test internal function loadJson() using invalid parameters.
-     * @param mixed $param
-     * @dataProvider invalidParametersForInternalLoadJsonFunction
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected config to be a JSON encoded string!
-     */
-    public function testInvalidParametersForInternalLoadJsonFunction($param)
-    {
-        $config = new ConfigContainer();
-        $config->loadJsonString($param);
-    }
-
-    /**
-     * Test the PSR-11 container interface functions.
+     * Test the internal set() get() and has() methods.
      */
     public function testContainerInterfaceFunctions()
     {
-        $config = new ConfigContainer('{"qvypepzo":"K77wHitp", "sjkynhiv":"tGJQqHtg"}');
-        static::assertInstanceOf(ConfigContainer::class, $config);
+        $config = new ConfigStorage(['qvypepzo' => 'K77wHitp', 'sjkynhiv' => 'tGJQqHtg']);
+        static::assertInstanceOf(ConfigStorage::class, $config);
         static::assertTrue($config->has('qvypepzo'));
         static::assertSame('K77wHitp', $config->get('qvypepzo'));
         static::assertFalse($config->has('sjkynhiv'));
-        $this->setExpectedException(ConfigKeyNotFoundException::class, 'No entry was found for configuration key \'sjkynhiv\'.');
+        $this->setExpectedException(
+            ConfigKeyNotFoundException::class,
+            'No entry was found for configuration key \'sjkynhiv\'.'
+        );
         $config->get('sjkynhiv');
     }
 
@@ -165,12 +133,12 @@ class AbstractConfigContainerTest extends \PHPUnit_Framework_TestCase
      * Test setting an invalid configuration key.
      * @param mixed $key
      * @dataProvider invalidConfigurationKeys
-     * @expectedException \InvalidArgumentException
+     * @expectedException \LogicException
      * @expectedExceptionMessage Expected configuration key to be a string value.
      */
     public function testSettingInvalidConfigurationKeys($key)
     {
-        $config = new ConfigContainer();
+        $config = new ConfigStorage();
         $config->set($key, 'skbevrvd');
     }
 
@@ -178,12 +146,12 @@ class AbstractConfigContainerTest extends \PHPUnit_Framework_TestCase
      * Test getting an invalid configuration key.
      * @param mixed $key
      * @dataProvider invalidConfigurationKeys
-     * @expectedException \InvalidArgumentException
+     * @expectedException \LogicException
      * @expectedExceptionMessage Expected configuration key to be a string value.
      */
     public function testGettingInvalidConfigurationKeys($key)
     {
-        $config = new ConfigContainer();
+        $config = new ConfigStorage();
         $config->get($key);
     }
 
@@ -191,12 +159,12 @@ class AbstractConfigContainerTest extends \PHPUnit_Framework_TestCase
      * Test having an invalid configuration key.
      * @param mixed $key
      * @dataProvider invalidConfigurationKeys
-     * @expectedException \InvalidArgumentException
+     * @expectedException \LogicException
      * @expectedExceptionMessage Expected configuration key to be a string value.
      */
     public function testHavingInvalidConfigurationKeys($key)
     {
-        $config = new ConfigContainer();
+        $config = new ConfigStorage();
         $config->has($key);
     }
 
@@ -222,6 +190,32 @@ class AbstractConfigContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testSettingInvalidConfigurationValues($value)
     {
-        new ConfigContainer(['qvypepzo' => $value]);
+        new ConfigStorage(['qvypepzo' => $value]);
+    }
+
+    /**
+     * Test PHP object serialization.
+     */
+    public function testSerialization()
+    {
+        $config = new ConfigStorage(['qvypepzo' => 'd7sdKgbZ']);
+        $expected = 'C:41:"tests\phpsap\classes\helper\ConfigStorage":36:{a:1:{s:8:"qvypepzo";s:8:"d7sdKgbZ";}}';
+        $actual = serialize($config);
+        static::assertSame($expected, $actual);
+    }
+
+    public function testUnserialization()
+    {
+        $serialized = serialize(new ConfigStorage(['qvypepzo' => 'd7sdKgbZ']));
+        $config = unserialize($serialized);
+        /**
+         * @var \tests\phpsap\classes\helper\ConfigStorage $config
+         */
+        static::assertInstanceOf(Serializable::class, $config);
+        static::assertInstanceOf(AbstractConfigStorage::class, $config);
+        static::assertInstanceOf(ConfigStorage::class, $config);
+        static::assertTrue($config->has('qvypepzo'));
+        static::assertSame('d7sdKgbZ', $config->get('qvypepzo'));
+        static::assertSame('d7sdKgbZ', $config->getQvypepzo());
     }
 }
