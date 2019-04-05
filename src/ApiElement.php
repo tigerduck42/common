@@ -25,15 +25,15 @@ class ApiElement implements IApiElement, JsonSerializable
     /**
      * ApiElement constructor.
      * @param string $name
-     * @param int    $type
+     * @param string $direction
      * @param string $dataType
      * @param bool   $optional
      * @throws \InvalidArgumentException
      */
-    public function __construct($name, $type, $dataType, $optional = true)
+    public function __construct($name, $direction, $dataType, $optional = true)
     {
         $this->setName($name);
-        $this->setDirection($type);
+        $this->setDirection($direction);
         $this->setDataType($dataType);
         $this->setOptional($optional);
     }
