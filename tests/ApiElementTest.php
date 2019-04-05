@@ -2,6 +2,7 @@
 
 namespace tests\phpsap\classes;
 
+use InvalidArgumentException;
 use phpsap\classes\ApiElement;
 use phpsap\interfaces\IApiElement;
 use JsonSerializable;
@@ -76,6 +77,34 @@ class ApiElementTest extends \PHPUnit_Framework_TestCase
         static::assertSame('Hello PHP!', $element->getDescription());
         $element->setDescription(null);
         static::assertNull($element->getDescription());
+    }
+
+    /**
+     * Test adding members to an element.
+     */
+    public function testAddingMembers()
+    {
+        $element = new ApiElement('IN_ADDRESS', ApiElement::DIR_INPUT, 'array');
+        $element->addMember(new ApiElement('ADDRESS', ApiElement::DIR_INPUT, 'string'));
+        $element->addMember(new ApiElement('CODE', ApiElement::DIR_INPUT, 'string'));
+        $element->addMember(new ApiElement('AREA', ApiElement::DIR_INPUT, 'string'));
+        $element->addMember(new ApiElement('COUNTRY', ApiElement::DIR_INPUT, 'string'));
+        $members = $element->getMembers();
+        static::assertInternalType('array', $members);
+        $elementNames = ['ADDRESS', 'CODE', 'AREA', 'COUNTRY'];
+        foreach ($elementNames as $elementName) {
+            static::assertArrayHasKey($elementName, $members);
+            /**
+             * @var ApiElement $memberElement
+             */
+            $memberElement = $members[$elementName];
+            static::assertSame($elementName, $memberElement->getName());
+            static::assertSame(ApiElement::DIR_INPUT, $memberElement->getDirection());
+            static::assertSame('string', $memberElement->getDataType());
+            static::assertTrue($memberElement->isOptional());
+            static::assertNull($memberElement->getDescription());
+            static::assertEmpty($memberElement->getMembers());
+        }
     }
 
     /**
@@ -234,5 +263,32 @@ class ApiElementTest extends \PHPUnit_Framework_TestCase
     {
         $element = new ApiElement('IN_INT', ApiElement::DIR_INPUT, 'int');
         $element->setDescription($description);
+    }
+
+    /**
+     * Data provider of all non-array data types.
+     * @return array
+     */
+    public static function nonArrayDataTypes()
+    {
+        return [
+            ['bool'],
+            ['int'],
+            ['float'],
+            ['string']
+        ];
+    }
+
+    /**
+     * Test adding members to non-array data types
+     * @param string $dataType
+     * @dataProvider nonArrayDataTypes
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Only tables and array data types can have members!
+     */
+    public function testAddingMembersToNonArrayDataTypes($dataType)
+    {
+        $element = new ApiElement('IN_ADDRESS', ApiElement::DIR_INPUT, $dataType);
+        $element->addMember(new ApiElement('ADDRESS', ApiElement::DIR_INPUT, 'string'));
     }
 }
