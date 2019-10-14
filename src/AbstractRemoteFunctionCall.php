@@ -105,6 +105,19 @@ abstract class AbstractRemoteFunctionCall implements IFunction
     }
 
     /**
+     * Get set function parameters
+     * @param null $params
+     * @return array|null
+     * @throws \phpsap\interfaces\exceptions\IConnectionFailedException
+     * @throws \phpsap\interfaces\exceptions\IUnknownFunctionException
+     */
+    public function getParams($params = null)
+    {
+        $params = $this->getFunction()->getParamList($params);
+        return $params;
+    }
+
+    /**
      * The SAP remote function name.
      * @return string
      */

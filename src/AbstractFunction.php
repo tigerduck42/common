@@ -112,6 +112,22 @@ abstract class AbstractFunction implements IFunction
     }
 
     /**
+     * Get paramter list previously defined using setParam()
+     * combined with directly passed parameters
+     * @param null $params
+     * @return null|array
+     */
+    public function getParamList($params = null)
+    {
+        if (null !== $params) {
+            foreach ($params as $name => $value) {
+                $this->setParam($name, $value);
+            }
+        }
+        return $this->params;
+    }
+
+    /**
      * Invoke the prepared function call.
      * @param null|array $params Optional parameter array.
      * @return array
